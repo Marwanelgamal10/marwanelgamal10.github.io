@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marwan Elgamal Portfolio</title>
+<meta name="description" content="Marwan Elgamal, Video Editor · Motion & AI. Reels and brand videos.">
+<meta property="og:title" content="Marwan Elgamal | Video Editor">
+<meta property="og:description" content="Video Editor · Motion & AI. Watch my reels and brand work.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Single-theme "edit suite": graphite timeline, record-red accent, timecode details. Layout: one column, profile -> work tabs -> contact */
+  --bg:#111214;
+  --panel:#1a1c20;
+  --line:#2a2d33;
+  --ink:#eceae6;
+  --muted:#9a9ca3;
+  --accent:#ff4433;
+  --display:"Anton", Impact, "Arial Narrow", sans-serif;
+  --body:"DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:40px 20px 64px;display:flex;flex-direction:column;gap:44px}
+
+/* profile */
+.profile{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.avatar{width:168px;height:168px;border-radius:50%;padding:3px;background:linear-gradient(160deg,var(--accent),var(--line) 60%);box-shadow:0 16px 48px -18px rgba(255,68,51,.5)}
+.avatar-inner{width:100%;height:100%;border-radius:50%;background:var(--panel);overflow:hidden;border:3px solid var(--bg)}
+.avatar-inner img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block}
+.rec{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.rec::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.rec::before{animation:none}}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,9vw,64px);line-height:1;margin:0;letter-spacing:.01em;text-transform:uppercase;text-wrap:balance}
+.role{font-size:18px;font-weight:500;margin:0}
+.role span{color:var(--accent)}
+.bio{color:var(--muted);max-width:52ch;margin:0}
+.stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.stat{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:10px 16px;min-width:120px}
+.stat b{display:block;font-family:var(--display);font-weight:400;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat small{color:var(--muted);font-size:13px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tools span{font-family:var(--mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+
+/* work */
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;text-transform:uppercase;letter-spacing:.02em}
+.tabs{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px}
+.tab{appearance:none;border:0;background:transparent;color:var(--muted);font:500 14px var(--body);padding:8px 16px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.tab:focus-visible,.contact a:focus-visible,.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.grid{display:grid;gap:12px}
+.grid.vertical{grid-template-columns:repeat(3,1fr)}
+.grid.wide{grid-template-columns:repeat(2,1fr)}
+@media (max-width:520px){.grid.vertical{grid-template-columns:repeat(2,1fr)}.grid.wide{grid-template-columns:1fr}}
+.card{display:flex;flex-direction:column;gap:8px;text-decoration:none}
+.thumb{position:relative;border-radius:12px;overflow:hidden;background:
+  repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.03) 22px 23px),
+  linear-gradient(160deg,#25282e,#16181b);border:1px solid var(--line)}
+.thumb[style]{background:
+  radial-gradient(120% 70% at 20% 0%, hsl(var(--h) 70% 45% / .55), transparent 60%),
+  repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.03) 22px 23px),
+  linear-gradient(170deg,#24272d,#141518)}
+.big{position:absolute;left:12px;right:12px;bottom:34px;font-family:var(--display);font-size:clamp(20px,4.2vw,28px);line-height:1.05;text-transform:uppercase;color:var(--ink);text-wrap:balance}
+.vertical .thumb{aspect-ratio:9/16}
+.wide .thumb{aspect-ratio:16/9}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.play{position:absolute;inset:0;display:grid;place-items:center}
+.play i{width:46px;height:46px;border-radius:50%;background:rgba(17,18,20,.7);border:1px solid rgba(255,255,255,.25);display:grid;place-items:center}
+.play i::after{content:"";margin-left:3px;border-left:13px solid var(--ink);border-top:8px solid transparent;border-bottom:8px solid transparent}
+.card:hover .play i{background:var(--accent);border-color:var(--accent)}
+.tc{position:absolute;right:8px;bottom:8px;font-family:var(--mono);font-size:11px;background:rgba(0,0,0,.65);padding:2px 6px;border-radius:4px;font-variant-numeric:tabular-nums}
+.ratio{position:absolute;left:8px;top:8px;font-family:var(--mono);font-size:10px;color:var(--muted);border:1px solid var(--line);background:rgba(0,0,0,.5);padding:1px 5px;border-radius:4px}
+.card-title{font-size:14px;font-weight:500;line-height:1.3}
+.card-meta{font-size:12px;color:var(--muted);margin-top:-6px}
+.card{appearance:none;border:0;background:none;padding:0;color:inherit;font:inherit;text-align:start;cursor:pointer}
+.player{position:fixed;inset:0;z-index:50;background:rgba(5,5,7,.86);backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px}
+.player-box{position:relative;display:flex;flex-direction:column;gap:12px;width:min(400px,100%);max-height:100%}
+.player video{width:100%;max-height:calc(100vh - 150px);aspect-ratio:9/16;background:#000;border-radius:14px;object-fit:contain}
+.player-close{position:absolute;top:-6px;right:-6px;z-index:2;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:22px;line-height:1;cursor:pointer}
+.player-close:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.player-title{font-weight:700;font-size:17px}
+.player-desc{margin:4px 0 0;color:var(--muted);font-size:14px}
+[hidden]{display:none !important}
+
+/* contact */
+.contact{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media (max-width:520px){.contact{grid-template-columns:1fr}}
+.contact a{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);text-decoration:none}
+.contact a:hover{border-color:var(--accent)}
+.contact svg{width:22px;height:22px;flex:none;fill:var(--ink)}
+.contact b{display:block;font-weight:500}
+.contact small{color:var(--muted);font-size:13px}
+footer{text-align:center;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="profile">
+    <div class="avatar"><div class="avatar-inner" id="avatar"><img src="avatar.jpg" alt="Marwan Elgamal"></div></div>
+    <div class="rec">Available for projects</div>
+    <h1>Marwan Elgamal</h1>
+    <p class="role">Video Editor <span>·</span> Motion &amp; AI</p>
+    <p class="bio">I cut reels, ads and YouTube videos that hold attention from the first frame. Based in Qalyubia, Egypt, working with brands and creators.</p>
+    <div class="stats">
+      <div class="stat"><b>3</b><small>Years of experience</small></div>
+      <div class="stat"><b>100+</b><small>Videos delivered</small></div>
+    </div>
+    <div class="tools"><span>Premiere Pro</span><span>After Effects</span><span>CapCut</span></div>
+  </header>
+
+  <section aria-labelledby="work-h">
+    <div class="section-head">
+      <h2 id="work-h">My Work</h2>
+      <div class="tabs" role="tablist" aria-label="Work type">
+        <button class="tab" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="true">Reels</button>
+        <button class="tab" role="tab" id="tab-videos" aria-controls="panel-videos" aria-selected="false">Videos</button>
+        <button class="tab" role="tab" id="tab-shorts" aria-controls="panel-shorts" aria-selected="false">Shorts</button>
+      </div>
+    </div>
+
+    <div id="panel-reels" role="tabpanel" aria-labelledby="tab-reels" class="grid vertical"></div>
+    <div id="panel-videos" role="tabpanel" aria-labelledby="tab-videos" class="grid wide" hidden></div>
+    <div id="panel-shorts" role="tabpanel" aria-labelledby="tab-shorts" class="grid vertical" hidden></div>
+  </section>
+
+  <section aria-labelledby="contact-h">
+    <div class="section-head"><h2 id="contact-h">Let's Work</h2></div>
+    <div class="contact">
+      <a href="https://wa.me/qr/HZAY2SEM2EMAJ1" id="wa">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
+        <span><b>WhatsApp</b><small>Message me directly</small></span>
+      </a>
+      <a href="https://www.instagram.com/m__elgamall" id="ig">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.2A4.8 4.8 0 1 0 16.8 12 4.8 4.8 0 0 0 12 7.2Zm0 7.9A3.1 3.1 0 1 1 15.1 12 3.1 3.1 0 0 1 12 15.1Zm5-9.2a1.1 1.1 0 1 0 1.1 1.1A1.1 1.1 0 0 0 17 5.9ZM21.9 7a5.6 5.6 0 0 0-1.5-4A5.6 5.6 0 0 0 16.4 1.5C14.8 1.4 9.2 1.4 7.6 1.5A5.6 5.6 0 0 0 3.6 3 5.6 5.6 0 0 0 2.1 7c-.1 1.6-.1 6.4 0 8a5.6 5.6 0 0 0 1.5 4 5.6 5.6 0 0 0 4 1.5c1.6.1 6.4.1 8 0a5.6 5.6 0 0 0 4-1.5 5.6 5.6 0 0 0 1.5-4c.1-1.6.1-6.4 0-8Zm-2 9.8a3.3 3.3 0 0 1-1.8 1.8c-1.3.5-4.3.4-6.1.4s-4.8.1-6.1-.4a3.3 3.3 0 0 1-1.8-1.8c-.5-1.3-.4-4.3-.4-5.8s-.1-4.6.4-5.8A3.3 3.3 0 0 1 5.9 3.4C7.2 2.9 10.2 3 12 3s4.8-.1 6.1.4a3.3 3.3 0 0 1 1.8 1.8c.5 1.3.4 4.3.4 5.8s.1 4.6-.4 5.8Z"/></svg>
+        <span><b>Instagram</b><small>@m__elgamall</small></span>
+      </a>
+      <a href="https://www.facebook.com/share/1DE5UX95bR/" id="fb">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9a15.4 15.4 0 0 1 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z"/></svg>
+        <span><b>Facebook</b><small>Marwan Elgamal</small></span>
+      </a>
+      <a href="mailto:elgamalmarwan18@gmail.com" id="mail">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.2-8 5-8-5V6l8 5 8-5Z"/></svg>
+        <span><b>Email</b><small>elgamalmarwan18@gmail.com</small></span>
+      </a>
+    </div>
+  </section>
+
+  <footer>© 2026 Marwan Elgamal · Qalyubia, Egypt</footer>
+</main>
+
+<div id="player" class="player" hidden role="dialog" aria-modal="true" aria-labelledby="player-title">
+  <div class="player-box">
+    <button id="player-close" class="player-close" type="button" aria-label="Close">×</button>
+    <video id="player-video" controls playsinline preload="metadata"></video>
+    <div class="player-info">
+      <div id="player-title" class="player-title" dir="auto"></div>
+      <div id="player-meta" class="card-meta"></div>
+      <p id="player-desc" class="player-desc" dir="auto" hidden></p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Edit this list. desc/brief/role: optional description shown in the player */
+const work = {
+  reels: [
+    {id:"keeta", title:"Keeta · اللاعب المطابق", meta:"Brand activation", tc:"00:52", desc:""},
+    {id:"saleh", title:"صالح يسأل العالم", meta:"Street interview", tc:"01:17", desc:""},
+    {id:"five-guys", title:"Five Guys", meta:"Food & restaurant", tc:"01:04", desc:""},
+    {id:"rolly", title:"مطعم Rolly", meta:"Food & restaurant", tc:"00:36", desc:""},
+    {id:"cookies", title:"Batch Cookies", meta:"Food & restaurant", tc:"00:59", desc:""},
+    {id:"hirsch", title:"عطر هيرش", meta:"Product ad", tc:"00:21", desc:""},
+    {id:"option-one", title:"عطور أوبشن وان", meta:"Product ad · National Day", tc:"00:38", desc:""},
+    {id:"dr-samar", title:"د. سمر البيضاني", meta:"Educational content", tc:"02:21", desc:""},
+    {id:"alawaly", title:"العوالي هومز", meta:"Real estate", tc:"00:16", desc:""}
+  ],
+  videos: [],
+  shorts: []
+};
+const ratio = {reels:"9:16", videos:"16:9", shorts:"9:16"};
+const all = [];
+for (const key of Object.keys(work)) {
+  const panel = document.getElementById("panel-" + key);
+  const tab = document.getElementById("tab-" + key);
+  if (!work[key].length) { tab.hidden = true; continue; }
+  panel.innerHTML = work[key].map(v => { all.push(v); return `
+    <button class="card" type="button" data-id="${v.id}">
+      <div class="thumb">
+        <img src="vids/${v.id}.jpg" alt="" loading="lazy">
+        <span class="ratio">${ratio[key]}</span>
+        <span class="play"><i></i></span>
+        <span class="tc">${v.tc}</span>
+      </div>
+      <div class="card-title" dir="auto">${v.title}</div>
+      <div class="card-meta">${v.meta}</div>
+    </button>`; }).join("");
+}
+if (document.querySelectorAll(".tab:not([hidden])").length < 2) document.querySelector(".tabs").hidden = true;
+const tabs = [...document.querySelectorAll(".tab")];
+tabs.forEach(t => t.addEventListener("click", () => {
+  tabs.forEach(o => {
+    const on = o === t;
+    o.setAttribute("aria-selected", on);
+    document.getElementById(o.getAttribute("aria-controls")).hidden = !on;
+  });
+}));
+
+/* player */
+const modal = document.getElementById("player");
+const vid = document.getElementById("player-video");
+function openPlayer(id){
+  const v = all.find(x => x.id === id); if (!v) return;
+  vid.poster = `vids/${v.id}.jpg`;
+  vid.src = `vids/${v.id}.mp4`;
+  document.getElementById("player-title").textContent = v.title;
+  document.getElementById("player-meta").textContent = v.meta + " · " + v.tc;
+  const d = document.getElementById("player-desc");
+  d.textContent = v.desc || ""; d.hidden = !v.desc;
+  modal.hidden = false; document.body.style.overflow = "hidden";
+  vid.play().catch(()=>{});
+  document.getElementById("player-close").focus();
+}
+function closePlayer(){ vid.pause(); vid.removeAttribute("src"); vid.load(); modal.hidden = true; document.body.style.overflow = ""; }
+document.addEventListener("click", e => {
+  const c = e.target.closest(".card[data-id]"); if (c) openPlayer(c.dataset.id);
+  if (e.target === modal || e.target.closest("#player-close")) closePlayer();
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hidden) closePlayer(); });
+</script>
+</body>
+</html>
