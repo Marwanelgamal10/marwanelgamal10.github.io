@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Single-theme "edit suite": graphite timeline, record-red accent, timecode details. Layout: one column, profile -> work tabs -> contact */
+  /* Single-theme "edit suite": graphite timeline, record-red accent, timecode details. Layout: one column, profile -> work tabs (Reels / Studio / Motion Graphics) -> contact */
   --bg:#111214;
   --panel:#1a1c20;
   --line:#2a2d33;
@@ -73,7 +73,10 @@ h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;text-trans
   linear-gradient(170deg,#24272d,#141518)}
 .big{position:absolute;left:12px;right:12px;bottom:34px;font-family:var(--display);font-size:clamp(20px,4.2vw,28px);line-height:1.05;text-transform:uppercase;color:var(--ink);text-wrap:balance}
 .vertical .thumb{aspect-ratio:9/16}
-.wide .thumb{aspect-ratio:16/9}
+.wide .thumb,.card.is-wide .thumb{aspect-ratio:16/9}
+.grid.vertical .card.is-wide{grid-column:1 / -1}
+.player.wide .player-box{width:min(960px,100%)}
+.player.wide video{aspect-ratio:16/9;max-height:calc(100vh - 180px)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .play{position:absolute;inset:0;display:grid;place-items:center}
 .play i{width:46px;height:46px;border-radius:50%;background:rgba(17,18,20,.7);border:1px solid rgba(255,255,255,.25);display:grid;place-items:center}
@@ -127,14 +130,14 @@ footer{text-align:center;color:var(--muted);font-family:var(--mono);font-size:11
       <h2 id="work-h">My Work</h2>
       <div class="tabs" role="tablist" aria-label="Work type">
         <button class="tab" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="true">Reels</button>
-        <button class="tab" role="tab" id="tab-videos" aria-controls="panel-videos" aria-selected="false">Videos</button>
-        <button class="tab" role="tab" id="tab-shorts" aria-controls="panel-shorts" aria-selected="false">Shorts</button>
+        <button class="tab" role="tab" id="tab-studio" aria-controls="panel-studio" aria-selected="false">Studio</button>
+        <button class="tab" role="tab" id="tab-motion" aria-controls="panel-motion" aria-selected="false">Motion Graphics</button>
       </div>
     </div>
 
     <div id="panel-reels" role="tabpanel" aria-labelledby="tab-reels" class="grid vertical"></div>
-    <div id="panel-videos" role="tabpanel" aria-labelledby="tab-videos" class="grid wide" hidden></div>
-    <div id="panel-shorts" role="tabpanel" aria-labelledby="tab-shorts" class="grid vertical" hidden></div>
+    <div id="panel-studio" role="tabpanel" aria-labelledby="tab-studio" class="grid vertical" hidden></div>
+    <div id="panel-motion" role="tabpanel" aria-labelledby="tab-motion" class="grid vertical" hidden></div>
   </section>
 
   <section aria-labelledby="contact-h">
@@ -188,20 +191,29 @@ const work = {
     {id:"dr-samar", title:"د. سمر البيضاني", meta:"Educational content", tc:"02:21", desc:""},
     {id:"alawaly", title:"العوالي هومز", meta:"Real estate", tc:"00:16", desc:""}
   ],
-  videos: [],
-  shorts: []
+  studio: [
+    {id:"mohamed-youssef", title:"محمد يوسف · مبيعاتك بتزيد", meta:"Studio · Business", tc:"01:22", wide:true, desc:""},
+    {id:"theripy", title:"أخطر جملة في الشغل", meta:"Studio · Career advice", tc:"00:38", desc:""},
+    {id:"dr-hair", title:"Dr. Assem · زراعة الشعر", meta:"Studio · Medical", tc:"00:37", desc:""},
+    {id:"world-investment", title:"عالم الاستثمار · الإقامة النظامية", meta:"Studio · Investment", tc:"00:32", desc:""},
+    {id:"eye-doctor", title:"دكتور العيون", meta:"Studio · Medical", tc:"01:08", desc:""},
+    {id:"business-talk", title:"حوار بيزنس", meta:"Studio · Business", tc:"00:40", desc:""}
+  ],
+  motion: [
+    {id:"xtreme-fitness", title:"Xtreme She Fitness", meta:"Motion graphics ad", tc:"00:30", desc:""}
+  ]
 };
-const ratio = {reels:"9:16", videos:"16:9", shorts:"9:16"};
+
 const all = [];
 for (const key of Object.keys(work)) {
   const panel = document.getElementById("panel-" + key);
   const tab = document.getElementById("tab-" + key);
   if (!work[key].length) { tab.hidden = true; continue; }
   panel.innerHTML = work[key].map(v => { all.push(v); return `
-    <button class="card" type="button" data-id="${v.id}">
+    <button class="card${v.wide ? " is-wide" : ""}" type="button" data-id="${v.id}">
       <div class="thumb">
         <img src="vids/${v.id}.jpg" alt="" loading="lazy">
-        <span class="ratio">${ratio[key]}</span>
+        <span class="ratio">${v.wide ? "16:9" : "9:16"}</span>
         <span class="play"><i></i></span>
         <span class="tc">${v.tc}</span>
       </div>
@@ -226,6 +238,7 @@ function openPlayer(id){
   const v = all.find(x => x.id === id); if (!v) return;
   vid.poster = `vids/${v.id}.jpg`;
   vid.src = `vids/${v.id}.mp4`;
+  modal.classList.toggle("wide", !!v.wide);
   document.getElementById("player-title").textContent = v.title;
   document.getElementById("player-meta").textContent = v.meta + " · " + v.tc;
   const d = document.getElementById("player-desc");
