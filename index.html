@@ -87,7 +87,7 @@ h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;text-trans
 .card-title{font-size:14px;font-weight:500;line-height:1.3}
 .card-meta{font-size:12px;color:var(--muted);margin-top:-6px}
 .card{appearance:none;border:0;background:none;padding:0;color:inherit;font:inherit;text-align:start;cursor:pointer}
-.player{position:fixed;inset:0;z-index:50;background:rgba(5,5,7,.86);backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px}
+.player{position:fixed;inset:0;z-index:50;background:rgba(5,5,7,.9);display:grid;place-items:center;padding:16px}
 .player-box{position:relative;display:flex;flex-direction:column;gap:12px;width:min(400px,100%);max-height:100%}
 .player video{width:100%;max-height:calc(100vh - 150px);aspect-ratio:9/16;background:#000;border-radius:14px;object-fit:contain}
 .player-close{position:absolute;top:-6px;right:-6px;z-index:2;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:22px;line-height:1;cursor:pointer}
@@ -107,28 +107,127 @@ h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;text-trans
 .contact small{display:block}
 .contact .num{font-family:var(--mono);font-size:12px;color:var(--ink);opacity:.8;margin-top:2px;font-variant-numeric:tabular-nums}
 footer{text-align:center;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+
+/* ===== motion layer ===== */
+.bg-fx{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:var(--bg)}
+.bg-fx::before,.bg-fx::after{content:"";position:absolute;width:70vmax;height:70vmax;border-radius:50%;opacity:.35;will-change:transform}
+.bg-fx::before{background:radial-gradient(circle,#ff4433 0,transparent 60%);top:-30vmax;left:-20vmax;animation:drift1 22s ease-in-out infinite alternate}
+.bg-fx::after{background:radial-gradient(circle,#7a3cff 0,transparent 60%);bottom:-35vmax;right:-25vmax;opacity:.18;animation:drift2 28s ease-in-out infinite alternate}
+.bg-fx i{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");opacity:.05}
+.bg-fx b{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 79px,rgba(255,255,255,.025) 79px 80px);mask-image:linear-gradient(180deg,#000,transparent 70%)}
+@keyframes drift1{to{transform:translate(18vmax,12vmax) scale(1.15)}}
+@keyframes drift2{to{transform:translate(-16vmax,-10vmax) scale(1.1)}}
+body{background:transparent}
+
+/* hero entrance */
+.profile > *{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+.profile > *:nth-child(1){animation-delay:.05s}.profile > *:nth-child(2){animation-delay:.15s}
+.profile > *:nth-child(3){animation-delay:.25s}.profile > *:nth-child(4){animation-delay:.35s}
+.profile > *:nth-child(5){animation-delay:.45s}.profile > *:nth-child(6){animation-delay:.55s}
+.profile > *:nth-child(7){animation-delay:.65s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* avatar spinning ring */
+.avatar{position:relative;isolation:isolate;overflow:visible;background:none;box-shadow:0 0 60px -10px rgba(255,68,51,.55)}
+.avatar::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:conic-gradient(var(--accent),#ff9a3c,#7a3cff,var(--accent));animation:spinr 6s linear infinite reverse}
+.avatar::after{content:"";position:absolute;inset:-10px;border-radius:50%;border:1px dashed rgba(255,255,255,.14);animation:spinr 30s linear infinite}
+@keyframes spinr{to{transform:rotate(-360deg)}}
+
+/* name shimmer */
+h1{background:linear-gradient(100deg,var(--ink) 35%,#ffb4a8 48%,var(--ink) 61%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rise .8s .25s cubic-bezier(.2,.8,.2,1) both,shine 5s 1.2s ease-in-out infinite}
+@keyframes shine{0%{background-position:100% 0}60%,100%{background-position:-50% 0}}
+.rec .tcode{color:var(--ink);font-variant-numeric:tabular-nums}
+.stat{transition:transform .3s,border-color .3s}
+.stat:hover{transform:translateY(-3px);border-color:rgba(255,68,51,.5)}
+
+/* marquee */
+.marquee{position:relative;overflow:hidden;border-block:1px solid var(--line);padding:14px 0;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;margin:0 0 10px}
+.marquee-track{display:flex;gap:40px;width:max-content;animation:marq 32s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track span{font-family:var(--display);font-size:22px;letter-spacing:.03em;text-transform:uppercase;color:#cfcdc9;white-space:nowrap;display:flex;align-items:center;gap:40px}
+.marquee-track span::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* tabs indicator */
+.tabs{position:relative}
+.tab{position:relative;z-index:1;transition:color .3s}
+.tab[aria-selected="true"]{background:transparent;color:var(--bg)}
+.tab-ind{position:absolute;z-index:0;top:4px;bottom:4px;left:0;width:0;border-radius:999px;background:var(--ink);transition:transform .45s cubic-bezier(.2,.8,.2,1),width .45s cubic-bezier(.2,.8,.2,1)}
+
+/* cards */
+.card .thumb{transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s,border-color .45s}
+.card .thumb img{transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .5s}
+.card:hover .thumb{transform:translateY(-6px);border-color:rgba(255,68,51,.6);box-shadow:0 18px 40px -18px rgba(255,68,51,.55)}
+.card:hover .thumb img{transform:scale(1.06);filter:saturate(1.15)}
+.thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55));pointer-events:none}
+.thumb .tc,.thumb .ratio,.thumb .play{z-index:1}
+.play i{position:relative;transition:transform .35s,background .35s}
+.play i::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,68,51,.7);opacity:0;transform:scale(.8)}
+.card:hover .play i{transform:scale(1.12)}
+.card:hover .play i::before{animation:ping 1.2s ease-out infinite}
+@keyframes ping{0%{opacity:.9;transform:scale(.85)}100%{opacity:0;transform:scale(1.6)}}
+.card.reveal{animation:cardIn .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 70ms)}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.player:not([hidden]) .player-box{animation:pop .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}}
+
+/* section reveal */
+.sr{transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.sr.pending{opacity:0;transform:translateY(28px)}
+
+/* contact */
+.contact a{position:relative;overflow:hidden;transition:transform .3s,border-color .3s}
+.contact a::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,68,51,.18) 50%,transparent 70%);transform:translateX(-100%);transition:transform .7s}
+.contact a:hover{transform:translateY(-3px)}
+.contact a:hover::before{transform:translateX(100%)}
+.contact a::after{content:"↗";margin-left:auto;color:var(--muted);transition:transform .3s,color .3s}
+.contact a:hover::after{transform:translate(3px,-3px);color:var(--accent)}
+#wa svg{fill:#25d366}
+
+/* cursor glow (desktop) */
+.glow{position:fixed;left:0;top:0;width:420px;height:420px;margin:-210px 0 0 -210px;border-radius:50%;background:radial-gradient(circle,rgba(255,68,51,.10),transparent 65%);pointer-events:none;z-index:0;opacity:0;transition:opacity .4s}
+@media (hover:hover) and (pointer:fine){.glow.on{opacity:1}}
+.wrap{position:relative;z-index:1}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .sr.pending{opacity:1;transform:none}
+  h1{color:var(--ink);background:none}
+}
 </style>
 </head>
 <body>
+<div class="bg-fx" aria-hidden="true"><i></i><b></b></div>
+<div class="glow" aria-hidden="true"></div>
 <main class="wrap">
 
   <header class="profile">
     <div class="avatar"><div class="avatar-inner" id="avatar"><img src="avatar.jpg" alt="Marwan Elgamal"></div></div>
-    <div class="rec">Available for projects</div>
+    <div class="rec">Available for projects · <span class="tcode" id="tcode">00:00:00:00</span></div>
     <h1>Marwan Elgamal</h1>
     <p class="role">Video Editor <span>·</span> Motion &amp; AI</p>
     <p class="bio">I cut reels, ads and YouTube videos that hold attention from the first frame. Based in Qalyubia, Egypt, working with brands and creators.</p>
     <div class="stats">
-      <div class="stat"><b>3</b><small>Years of experience</small></div>
-      <div class="stat"><b>100+</b><small>Videos delivered</small></div>
+      <div class="stat"><b data-count="3">3</b><small>Years of experience</small></div>
+      <div class="stat"><b data-count="100" data-suffix="+">100+</b><small>Videos delivered</small></div>
     </div>
     <div class="tools"><span>Premiere Pro</span><span>After Effects</span><span>CapCut</span></div>
   </header>
 
-  <section aria-labelledby="work-h">
+  <div class="marquee sr" aria-label="Brands I've worked with">
+    <p class="marquee-label">Brands I've edited for</p>
+    <div class="marquee-track">
+      <span>Keeta</span><span>Five Guys</span><span>Rolly</span><span>Batch Cookies</span><span>Hirsch</span><span>Option One</span><span>عالم الاستثمار</span><span>Al Awaly Homes</span><span>Xtreme She Fitness</span><span>Dr. Assem</span>
+      <span aria-hidden="true">Keeta</span><span aria-hidden="true">Five Guys</span><span aria-hidden="true">Rolly</span><span aria-hidden="true">Batch Cookies</span><span aria-hidden="true">Hirsch</span><span aria-hidden="true">Option One</span><span aria-hidden="true">عالم الاستثمار</span><span aria-hidden="true">Al Awaly Homes</span><span aria-hidden="true">Xtreme She Fitness</span><span aria-hidden="true">Dr. Assem</span>
+    </div>
+  </div>
+
+  <section aria-labelledby="work-h" class="sr">
     <div class="section-head">
       <h2 id="work-h">My Work</h2>
       <div class="tabs" role="tablist" aria-label="Work type">
+        <span class="tab-ind" aria-hidden="true"></span>
         <button class="tab" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="true">Reels</button>
         <button class="tab" role="tab" id="tab-studio" aria-controls="panel-studio" aria-selected="false">Studio</button>
         <button class="tab" role="tab" id="tab-motion" aria-controls="panel-motion" aria-selected="false">Motion Graphics</button>
@@ -140,7 +239,7 @@ footer{text-align:center;color:var(--muted);font-family:var(--mono);font-size:11
     <div id="panel-motion" role="tabpanel" aria-labelledby="tab-motion" class="grid vertical" hidden></div>
   </section>
 
-  <section aria-labelledby="contact-h">
+  <section aria-labelledby="contact-h" class="sr">
     <div class="section-head"><h2 id="contact-h">Let's Work</h2></div>
     <div class="contact">
       <a href="https://wa.me/201508750699" id="wa">
@@ -229,7 +328,44 @@ tabs.forEach(t => t.addEventListener("click", () => {
     o.setAttribute("aria-selected", on);
     document.getElementById(o.getAttribute("aria-controls")).hidden = !on;
   });
+  moveInd(t);
+  animateCards(document.getElementById(t.getAttribute("aria-controls")));
 }));
+
+/* ===== motion ===== */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const ind = document.querySelector(".tab-ind");
+function moveInd(t){ if(!ind || !t) return; ind.style.width = t.offsetWidth + "px"; ind.style.transform = `translateX(${t.offsetLeft}px)`; }
+const firstTab = document.querySelector(".tab[aria-selected='true']");
+requestAnimationFrame(() => moveInd(firstTab));
+addEventListener("resize", () => moveInd(document.querySelector(".tab[aria-selected='true']")));
+if ("ResizeObserver" in window) new ResizeObserver(() => moveInd(document.querySelector(".tab[aria-selected='true']"))).observe(document.querySelector(".tabs"));
+document.fonts && document.fonts.ready.then(() => moveInd(document.querySelector(".tab[aria-selected='true']")));
+function animateCards(panel){
+  if (reduce || !panel) return;
+  [...panel.querySelectorAll(".card")].forEach((c,i) => { c.classList.remove("reveal"); c.style.setProperty("--i", i); void c.offsetWidth; c.classList.add("reveal"); });
+}
+/* running timecode, 25fps */
+const tcEl = document.getElementById("tcode"); const t0 = performance.now();
+const pad = n => String(n).padStart(2,"0");
+function tick(){ const f = Math.floor((performance.now()-t0)/40); const fr=f%25, sec=Math.floor(f/25); tcEl.textContent = `${pad(Math.floor(sec/3600))}:${pad(Math.floor(sec/60)%60)}:${pad(sec%60)}:${pad(fr)}`; }
+if (tcEl) { tick(); if (!reduce) setInterval(tick, 40); }
+/* count up */
+if (!reduce) document.querySelectorAll("[data-count]").forEach(el => {
+  const end = +el.dataset.count, suf = el.dataset.suffix || "", st = performance.now(), d = 1400;
+  (function step(now){ const p = Math.min((now-st)/d,1), e = 1-Math.pow(1-p,3); el.textContent = Math.round(end*e) + (p===1?suf:""); if(p<1) requestAnimationFrame(step); })(st);
+});
+/* scroll reveal: only hide what is below the fold, so the first frame is complete */
+if (!reduce && "IntersectionObserver" in window) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.remove("pending"); if (e.target.querySelector(".grid")) animateCards(e.target.querySelector(".grid:not([hidden])")); io.unobserve(e.target); } }), {threshold:.12});
+  document.querySelectorAll(".sr").forEach(el => { if (el.getBoundingClientRect().top > innerHeight) { el.classList.add("pending"); io.observe(el); } });
+}
+/* cursor glow */
+const glow = document.querySelector(".glow");
+if (glow && matchMedia("(hover:hover) and (pointer:fine)").matches && !reduce) {
+  addEventListener("pointermove", e => { glow.classList.add("on"); glow.style.transform = `translate(${e.clientX}px,${e.clientY}px)`; }, {passive:true});
+  document.addEventListener("pointerleave", () => glow.classList.remove("on"));
+}
 
 /* player */
 const modal = document.getElementById("player");
